@@ -65,7 +65,7 @@ void arm_left_right(float sl, float sr, int sp) {
 
 void arm_l_r(int l, int r, int sp) { arm_left_right(l, r, sp); }
 
-void arm_up_down(float sl, int sp) {
+void arm_cm_down(float sl, int sp) {
   float step36 = (sl - s36_before_deg) / num_steps;
 
   for (int i = 0; i < num_steps; i++) {
@@ -110,15 +110,15 @@ void arm_down_open() {
   servo(35, servoR_open);
 }
 
-void arm_open_up() {
+void arm_open_cm() {
   servo(34, servoL_open);
   servo(35, servoR_open);
   delay(300);
-  servo(36, servo_down + 95);
+  servo(36, servo_cm_5);
 }
 
-void arm_up_open() {
-  servo(36, servo_down + 95);
+void arm_cm_open() {
+  servo(36, servo_cm_5);
   delay(300);
   servo(34, servoL_open);
   servo(35, servoR_open);
@@ -131,8 +131,8 @@ void arm_down_close() {
   servo(35, servoR_open - 91);
 }
 
-void arm_up_close() {
-  servo(36, servo_down + 95);
+void arm_cm_close() {
+  servo(36, servo_cm_5);
   delay(100);
   servo(34, servoL_open - 91);
   servo(35, servoR_open - 91);
@@ -154,5 +154,35 @@ void arm_open() {
   servo(35, servoR_open);
 }
 
-void arm_up() { servo(36, servo_down + 95); }
+void arm_cm() { servo(36, servo_cm_5); }
 void arm_down() { servo(36, servo_down); }
+
+// ยกแขนตามระดับ (2-5 เซน)
+void arm_cm_2cm() { servo(36, servo_cm_2); }  // ยกระดับ 2 เซน
+void arm_cm_3cm() { servo(36, servo_cm_3); }  // ยกระดับ 3 เซน
+void arm_cm_4cm() { servo(36, servo_cm_4); }  // ยกระดับ 4 เซน
+void arm_cm_5cm() { servo(36, servo_cm_5); }  // ยกระดับ 5 เซน (สูงสุด)
+
+// ยกแขนตามระดับ พร้อมเปิดกรงเล็บ
+void arm_cm_2cm_open() { servo(36, servo_cm_2); delay(100); arm_open(); }
+void arm_cm_3cm_open() { servo(36, servo_cm_3); delay(100); arm_open(); }
+void arm_cm_4cm_open() { servo(36, servo_cm_4); delay(100); arm_open(); }
+void arm_cm_5cm_open() { servo(36, servo_cm_5); delay(100); arm_open(); }
+
+// ยกแขนตามระดับ พร้อมปิดกรงเล็บ
+void arm_cm_2cm_close() { servo(36, servo_cm_2); delay(100); arm_close(); }
+void arm_cm_3cm_close() { servo(36, servo_cm_3); delay(100); arm_close(); }
+void arm_cm_4cm_close() { servo(36, servo_cm_4); delay(100); arm_close(); }
+void arm_cm_5cm_close() { servo(36, servo_cm_5); delay(100); arm_close(); }
+
+// ยกแขนตามระดับที่กำหนด (1-5)
+void arm_level(int level) {
+  switch(level) {
+    case 1: arm_down(); break;
+    case 2: arm_cm_2cm(); break;
+    case 3: arm_cm_3cm(); break;
+    case 4: arm_cm_4cm(); break;
+    case 5: arm_cm_5cm(); break;
+    default: arm_down(); break;
+  }
+}

@@ -39,12 +39,16 @@ float LINE_KD = 0.025;
 //  ส่วนที่ 2: ตั้งค่า Servo แขนกล
 // =============================================================================
 
-int servo_down   = 50;
-int servoL_open  = 120;
-int servoR_open  = 125;
-int servo_trim34 = -5;
-int servo_trim35 = 0;
-int servo_trim36 = 0;
+int servo_down   = 50;    // องศาแขนลง (ต่ำสุด)
+int servo_cm_2   = 70;    // องศายกระดับ 2 เซน
+int servo_cm_3   = 90;    // องศายกระดับ 3 เซน
+int servo_cm_4   = 110;   // องศายกระดับ 4 เซน
+int servo_cm_5   = 130;   // องศายกระดับ 5 เซน (สูงสุด)
+int servoL_open  = 120;   // องศากรงเล็บซ้ายเปิด
+int servoR_open  = 125;   // องศากรงเล็บขวาเปิด
+int servo_trim34 = -5;    // ค่าชดเชย servo 34
+int servo_trim35 = 0;     // ค่าชดเชย servo 35
+int servo_trim36 = 0;     // ค่าชดเชย servo 36
 
 
 // =============================================================================

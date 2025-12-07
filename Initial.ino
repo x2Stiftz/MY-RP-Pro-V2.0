@@ -364,7 +364,7 @@ int SERVO_TRIM[6] = {0, 0, 0, 0, 0, 0};  // trim สำหรับ servo 0-5
 
 // ตำแหน่งแขน
 int ARM_DOWN = 50;            // แขนลง
-int ARM_UP = 150;             // แขนขึ้น
+int ARM_cm = 150;             // แขนขึ้น
 int GRIPPER_OPEN_L = 120;     // กรงเล็บซ้ายเปิด
 int GRIPPER_OPEN_R = 125;     // กรงเล็บขวาเปิด
 int GRIPPER_CLOSE_L = 60;     // กรงเล็บซ้ายปิด
