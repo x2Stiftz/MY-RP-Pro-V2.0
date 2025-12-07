@@ -17,84 +17,8 @@
 //  ฟังก์ชันจูนมอเตอร์ (แก้ไขตรงนี้!)
 // =============================================================================
 
-void getMotorTuning(int speed, int &offsetL, int &offsetR) {
-  /*
-   * ========================================
-   *  จูนมอเตอร์ตาม Speed ตรงนี้!
-   * ========================================
-   * 
-   * ถ้าหุ่นเบี้ยวไปทางซ้าย = มอเตอร์ซ้ายแรงกว่า = เพิ่ม offsetL
-   * ถ้าหุ่นเบี้ยวไปทางขวา = มอเตอร์ขวาแรงกว่า = เพิ่ม offsetR
-   */
-  
-  // ค่าเริ่มต้น
-  offsetL = 0;
-  offsetR = 0;
-  
-  //------------------------------------------------------------
-  // จูนตาม Speed
-  //------------------------------------------------------------
-  
-  if (speed == 20) {
-    offsetL = 0;
-    offsetR = 0;
-  }
-  else if (speed == 30) {
-    offsetL = 0;
-    offsetR = 0;
-  }
-  else if (speed == 40) {
-    offsetL = 0;
-    offsetR = 1;
-  }
-  else if (speed == 50) {
-    offsetL = 0;
-    offsetR = 2;
-  }
-  else if (speed == 60) {
-    offsetL = 0;
-    offsetR = 2;
-  }
-  else if (speed == 70) {
-    offsetL = 0;
-    offsetR = 3;
-  }
-  else if (speed == 80) {
-    offsetL = 0;
-    offsetR = 3;
-  }
-  else if (speed == 90) {
-    offsetL = 0;
-    offsetR = 4;
-  }
-  else if (speed == 100) {
-    offsetL = 0;
-    offsetR = 5;
-  }
-  else {
-    // สำหรับ speed อื่นๆ ใช้การประมาณ
-    if (speed < 30) {
-      offsetL = 0;
-      offsetR = 0;
-    }
-    else if (speed < 50) {
-      offsetL = 0;
-      offsetR = 1;
-    }
-    else if (speed < 70) {
-      offsetL = 0;
-      offsetR = 2;
-    }
-    else if (speed < 90) {
-      offsetL = 0;
-      offsetR = 3;
-    }
-    else {
-      offsetL = 0;
-      offsetR = 4;
-    }
-  }
-}
+// getMotorTuning ถูกย้ายไปไว้ใน Initial.ino แล้ว
+// ฟังก์ชันนี้ประกาศใน Initial.ino เพื่อให้จัดการ tuning ได้ง่าย
 
 
 // =============================================================================

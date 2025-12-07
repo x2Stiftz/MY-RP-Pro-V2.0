@@ -595,7 +595,7 @@ void setTurnSpeed(int speed) {
   TurnSpeed = speed;
 }
 
-void setBrake(int speed, int time) {
+void setTurnBrake(int speed, int time) {
   BrakeSpeed = speed;
   BrakeTime = time;
 }

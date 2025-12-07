@@ -280,10 +280,11 @@ void getMotorTuning(int speed, int &offsetL, int &offsetR) {
  *    - ค่ามาก = เร็วแต่ไม่แม่น
  */
 
-// ----- Gyro PID -----
-float GYRO_KP = 1.5;          // Proportional (แนะนำ: 1.0 - 3.0)
-float GYRO_KI = 0.001;        // Integral (แนะนำ: 0.0 - 0.01)
-float GYRO_KD = 0.5;          // Derivative (แนะนำ: 0.3 - 1.0)
+// ----- Gyro PID (ประกาศใน MyRobot_Complete.ino) -----
+// ใช้ extern เพื่ออ้างถึงตัวแปรที่ประกาศไว้แล้ว
+extern float GYRO_KP;
+extern float GYRO_KI;
+extern float GYRO_KD;
 
 // ----- Spin Settings -----
 float SPIN_TOLERANCE = 2.0;   // องศาที่ยอมรับได้ (±) (แนะนำ: 1.0 - 3.0)
@@ -383,8 +384,9 @@ int GRIPPER_CLOSE_R = 65;     // กรงเล็บขวาปิด
  *  ถ้าหุ่นกระตุก = ลด BRAKE_POWER
  */
 
-int BRAKE_TIME = 10;          // เวลาเบรค (ms)
-int BRAKE_POWER = 20;         // กำลังเบรค (%)
+// BRAKE_TIME และ BRAKE_POWER ประกาศใน MyRobot_Complete.ino
+extern int BRAKE_TIME;
+extern int BRAKE_POWER;
 
 
 // =============================================================================
@@ -572,30 +574,30 @@ void TracFront(int speed) {
 // =============================================================================
 
 // Calibrate Gyro (หาค่า offset)
+// หมายเหตุ: ฟังก์ชัน gyro_begin() ใน Gyro.ino จะ calibrate อัตโนมัติอยู่แล้ว
+// ฟังก์ชันนี้ใช้สำหรับ re-calibrate ถ้าต้องการ
 void calibrateGyro() {
   Serial.println("Calibrating Gyro... Keep robot still!");
   led_rgb('y');
-  
-  float sumX = 0, sumY = 0, sumZ = 0;
-  int samples = 500;
-  
-  for (int i = 0; i < samples; i++) {
-    int16_t gx, gy, gz;
-    readGyroRaw(gx, gy, gz);
-    sumX += gx;
-    sumY += gy;
-    sumZ += gz;
-    delay(2);
+
+  // รีเซ็ตมุมทั้งหมด
+  resetAngles();
+
+  // อ่านค่าหลายครั้งเพื่อให้ gyro เสถียร
+  float roll, pitch, yaw;
+  for (int i = 0; i < 100; i++) {
+    gyro_readAngles(roll, pitch, yaw);
+    delay(10);
   }
-  
-  GYRO_OFFSET_X = sumX / samples;
-  GYRO_OFFSET_Y = sumY / samples;
-  GYRO_OFFSET_Z = sumZ / samples;
-  
-  Serial.print("Gyro Offset: X="); Serial.print(GYRO_OFFSET_X);
-  Serial.print(" Y="); Serial.print(GYRO_OFFSET_Y);
-  Serial.print(" Z="); Serial.println(GYRO_OFFSET_Z);
-  
+
+  // รีเซ็ตอีกครั้งหลังอ่านค่าเสถียรแล้ว
+  resetAngles();
+
+  Serial.println("Gyro Calibration Complete!");
+  Serial.print("Current angles - Roll: "); Serial.print(roll);
+  Serial.print(" Pitch: "); Serial.print(pitch);
+  Serial.print(" Yaw: "); Serial.println(yaw);
+
   beep(2000, 200);
   led_off();
 }
@@ -625,20 +627,18 @@ float getHeading() {
 // =============================================================================
 
 void initTuning() {
-  // ตั้งค่า Turn
-  TurnSpeed = TURN_SPEED;
-  BrakeSpeed = TURN_BRAKE_SPEED;
-  BrakeTime = TURN_BRAKE_TIME;
-  turn_delay_90 = TURN_DELAY_90;
-  turn_delay_180 = TURN_DELAY_180;
-  
-  // ตั้งค่า Trac
-  kp_slow = TRAC_KP;
-  ki_slow = TRAC_KI;
-  kd_f = TRAC_KD;
-  slmotor = TRAC_SLOW_SPEED;
-  srmotor = TRAC_SLOW_SPEED;
-  
+  // ตั้งค่า Turn (ใช้ฟังก์ชันตั้งค่าแทน)
+  setTurnSpeed(TURN_SPEED);
+  setTurnBrake(TURN_BRAKE_SPEED, TURN_BRAKE_TIME);
+  setTurnDelay90(TURN_DELAY_90);
+  setTurnDelay180(TURN_DELAY_180);
+
+  // ตั้งค่า Trac - ใช้ตัวแปรที่มีอยู่แล้ว
+  LINE_KP = TRAC_KP;
+  LINE_KI = TRAC_KI;
+  LINE_KD = TRAC_KD;
+  SlowSpeed = TRAC_SLOW_SPEED;
+
   Serial.println("=== Tuning Initialized ===");
 }
 
