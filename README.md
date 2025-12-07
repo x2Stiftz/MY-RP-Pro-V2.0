@@ -571,7 +571,8 @@ MIT License - ใช้งานได้อิสระ
 ## 👨‍💻 Author
 
 Created with ❤️ for Robot Competition
+Cr: [My Makers RP-PRO V.2.0](https://www.mymakers.online/myrpprov2.php)
 
 ---
 
-*Last Updated: December 2024*
+*Last Updated: December 2025*
